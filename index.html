@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProPrint Wide Format Printing</title>
+    <title>PrintPro Wide Format Printing</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Global Styles */
@@ -12,6 +12,14 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
         }
         
         body {
@@ -33,7 +41,7 @@
         
         h1, h2, h3 {
             margin-bottom: 20px;
-            color: #2c3e50;
+            color: var(--dark);
         }
         
         p {
@@ -42,7 +50,7 @@
         
         button, .btn {
             display: inline-block;
-            background: #3498db;
+            background: var(--secondary);
             color: white;
             padding: 12px 24px;
             border: none;
@@ -51,19 +59,29 @@
             text-decoration: none;
             font-size: 16px;
             font-weight: 600;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         button:hover, .btn:hover {
             background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         .btn-secondary {
-            background: #2c3e50;
+            background: var(--primary);
         }
         
         .btn-secondary:hover {
             background: #1a2530;
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background: #c0392b;
         }
         
         /* Header Styles */
@@ -83,14 +101,21 @@
         }
         
         .logo {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
-            color: #3498db;
+            color: var(--secondary);
             text-decoration: none;
+            display: flex;
+            align-items: center;
         }
         
         .logo span {
-            color: #2c3e50;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 32px;
         }
         
         nav ul {
@@ -104,13 +129,29 @@
         
         nav ul li a {
             text-decoration: none;
-            color: #2c3e50;
+            color: var(--dark);
             font-weight: 600;
             transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--secondary);
+            transition: width 0.3s ease;
         }
         
         nav ul li a:hover {
-            color: #3498db;
+            color: var(--secondary);
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
         }
         
         .mobile-menu-btn {
@@ -118,7 +159,7 @@
             font-size: 24px;
             background: none;
             border: none;
-            color: #2c3e50;
+            color: var(--dark);
             cursor: pointer;
         }
         
@@ -144,6 +185,13 @@
             margin: 0 auto 30px;
         }
         
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
         /* Services Section */
         .services-grid {
             display: grid;
@@ -157,11 +205,12 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         .service-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
         }
         
         .service-img {
@@ -176,17 +225,28 @@
         
         /* File Upload Section */
         .upload-area {
-            border: 2px dashed #3498db;
+            border: 2px dashed var(--secondary);
             border-radius: 8px;
             padding: 40px;
             text-align: center;
             margin: 30px 0;
             background: #f8fafc;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: #f0f7ff;
+        }
+        
+        .upload-area.dragover {
+            border-color: var(--accent);
+            background: #fff0f0;
         }
         
         .upload-icon {
             font-size: 48px;
-            color: #3498db;
+            color: var(--secondary);
             margin-bottom: 15px;
         }
         
@@ -207,6 +267,13 @@
             padding: 10px 15px;
             border-radius: 4px;
             margin-bottom: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .file-item button {
+            background: var(--accent);
+            padding: 5px 10px;
+            font-size: 14px;
         }
         
         /* Material Selection */
@@ -226,8 +293,9 @@
         }
         
         .material-card:hover, .material-card.selected {
-            border-color: #3498db;
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.1);
+            border-color: var(--secondary);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+            transform: translateY(-3px);
         }
         
         .material-card h3 {
@@ -236,7 +304,7 @@
         
         .material-price {
             font-weight: bold;
-            color: #3498db;
+            color: var(--secondary);
             margin-top: 10px;
         }
         
@@ -247,6 +315,7 @@
             padding: 30px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             margin: 30px 0;
+            animation: fadeIn 0.5s ease;
         }
         
         .quote-item {
@@ -259,7 +328,7 @@
         .quote-total {
             font-size: 24px;
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--dark);
             margin-top: 20px;
             padding-top: 20px;
             border-top: 2px solid #eee;
@@ -291,6 +360,12 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
+            transition: border 0.3s ease;
+        }
+        
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
         }
         
         /* Contact Section */
@@ -308,11 +383,17 @@
             align-items: center;
             justify-content: center;
             color: #7f8c8d;
+            flex-direction: column;
+        }
+        
+        .map-placeholder i {
+            font-size: 48px;
+            margin-bottom: 15px;
         }
         
         /* Footer */
         footer {
-            background: #2c3e50;
+            background: var(--dark);
             color: white;
             padding: 60px 0 30px;
         }
@@ -337,7 +418,7 @@
         }
         
         .footer-section a:hover {
-            color: #3498db;
+            color: var(--secondary);
         }
         
         .social-links {
@@ -365,10 +446,17 @@
             padding: 15px 25px;
             border-radius: 4px;
             background: white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             transform: translateX(150%);
             transition: transform 0.3s ease;
             z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification i {
+            margin-right: 10px;
+            font-size: 20px;
         }
         
         .notification.success {
@@ -379,8 +467,34 @@
             border-left: 4px solid #e74c3c;
         }
         
+        .notification.info {
+            border-left: 4px solid #3498db;
+        }
+        
         .notification.show {
             transform: translateX(0);
+        }
+        
+        /* Progress Bar */
+        .progress-bar {
+            height: 5px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--secondary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         /* Responsive Styles */
@@ -408,6 +522,10 @@
                 font-size: 18px;
             }
             
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
             .contact-container {
                 grid-template-columns: 1fr;
             }
@@ -433,7 +551,7 @@
     <!-- Header -->
     <header>
         <div class="container header-container">
-            <a href="#" class="logo">Pro<span>Print</span></a>
+            <a href="#" class="logo"><i class="fas fa-print"></i>Print<span>Pro</span></a>
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
             </button>
@@ -453,7 +571,10 @@
         <div class="container">
             <h1>Professional Wide Format Printing</h1>
             <p>High-quality printing on foam board, rigid substrates, banners, vinyl, and more for all your business needs</p>
-            <a href="#order" class="btn">Request a Quote</a>
+            <div class="hero-buttons">
+                <a href="#order" class="btn">Request a Quote</a>
+                <a href="#services" class="btn btn-secondary">Our Services</a>
+            </div>
         </div>
     </section>
 
@@ -468,6 +589,7 @@
                 <div class="service-content">
                     <h3>Foam Board Printing</h3>
                     <p>Lightweight yet rigid printing solution perfect for presentations, exhibitions, and displays.</p>
+                    <p class="material-price">Starting at $10/sq ft</p>
                 </div>
             </div>
             
@@ -476,6 +598,7 @@
                 <div class="service-content">
                     <h3>Banner Printing</h3>
                     <p>Durable and weather-resistant banners for indoor and outdoor advertising.</p>
+                    <p class="material-price">Starting at $15/sq ft</p>
                 </div>
             </div>
             
@@ -484,6 +607,7 @@
                 <div class="service-content">
                     <h3>Vinyl Printing</h3>
                     <p>Versatile vinyl printing for vehicle graphics, window displays, and floor graphics.</p>
+                    <p class="material-price">Starting at $12/sq ft</p>
                 </div>
             </div>
             
@@ -492,6 +616,7 @@
                 <div class="service-content">
                     <h3>Rigid Substrates</h3>
                     <p>High-quality printing on aluminum, acrylic, and other rigid materials for premium displays.</p>
+                    <p class="material-price">Starting at $20/sq ft</p>
                 </div>
             </div>
         </div>
@@ -503,7 +628,7 @@
         <p>Upload your artwork, select your preferred material, and get an instant quote for your printing project</p>
         
         <!-- File Upload -->
-        <div class="upload-area">
+        <div class="upload-area" id="upload-area">
             <div class="upload-icon">
                 <i class="fas fa-cloud-upload-alt"></i>
             </div>
@@ -549,13 +674,19 @@
         <div class="form-group" style="margin-top: 30px;">
             <label for="dimensions">Enter Dimensions (in feet)</label>
             <div style="display: flex; gap: 15px;">
-                <input type="number" id="width" placeholder="Width" min="1">
-                <input type="number" id="height" placeholder="Height" min="1">
+                <input type="number" id="width" placeholder="Width" min="1" step="0.1">
+                <input type="number" id="height" placeholder="Height" min="1" step="0.1">
             </div>
         </div>
         
+        <!-- Quantity Input -->
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" placeholder="Enter quantity" min="1" value="1">
+        </div>
+        
         <!-- Quote Display -->
-        <div class="quote-summary" id="quote-summary" style="display: none;">
+        <div class="quote-summary" id="quote-summary">
             <h3>Your Quote Summary</h3>
             <div class="quote-item">
                 <span>Material:</span>
@@ -564,6 +695,10 @@
             <div class="quote-item">
                 <span>Dimensions:</span>
                 <span id="quote-dimensions">-</span>
+            </div>
+            <div class="quote-item">
+                <span>Quantity:</span>
+                <span id="quote-quantity">-</span>
             </div>
             <div class="quote-item">
                 <span>Price per sq ft:</span>
@@ -583,7 +718,7 @@
     </section>
 
     <!-- Payment Section -->
-    <section id="payment" class="container" style="display: none;">
+    <section id="payment" class="container">
         <h2>Complete Your Order</h2>
         <p>Enter your details and payment information to complete your printing order</p>
         
@@ -591,37 +726,41 @@
             <h3>Customer Information</h3>
             
             <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" placeholder="Enter your full name">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" placeholder="Enter your full name" required>
             </div>
             
             <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" placeholder="Enter your email">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
             </div>
             
             <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" placeholder="Enter your phone number">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number" required>
             </div>
             
             <h3>Payment Details</h3>
             
             <div class="form-group">
-                <label for="card-number">Credit Card Number</label>
-                <input type="text" id="card-number" placeholder="Enter card number">
+                <label for="card-number">Credit Card Number *</label>
+                <input type="text" id="card-number" placeholder="Enter card number" required>
             </div>
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                 <div class="form-group">
-                    <label for="expiry">Expiry Date</label>
-                    <input type="text" id="expiry" placeholder="MM/YY">
+                    <label for="expiry">Expiry Date *</label>
+                    <input type="text" id="expiry" placeholder="MM/YY" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="cvv">CVV</label>
-                    <input type="text" id="cvv" placeholder="CVV">
+                    <label for="cvv">CVV *</label>
+                    <input type="text" id="cvv" placeholder="CVV" required>
                 </div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="payment-progress"></div>
             </div>
             
             <button id="submit-payment" class="btn" style="width: 100%;">Submit Payment</button>
@@ -638,12 +777,12 @@
                 <h3>Get in Touch</h3>
                 <form id="contact-form">
                     <div class="form-group">
-                        <label for="contact-name">Your Name</label>
+                        <label for="contact-name">Your Name *</label>
                         <input type="text" id="contact-name" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="contact-email">Email Address</label>
+                        <label for="contact-email">Email Address *</label>
                         <input type="email" id="contact-email" required>
                     </div>
                     
@@ -653,7 +792,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="contact-message">Message</label>
+                        <label for="contact-message">Message *</label>
                         <textarea id="contact-message" rows="5" required></textarea>
                     </div>
                     
@@ -664,7 +803,7 @@
             <div>
                 <h3>Our Location</h3>
                 <div class="map-placeholder">
-                    <i class="fas fa-map-marker-alt" style="font-size: 48px; margin-right: 15px;"></i>
+                    <i class="fas fa-map-marker-alt"></i>
                     <div>
                         <p>Interactive Map Would Appear Here</p>
                         <p>123 Print Street, Graphic City, GC 12345</p>
@@ -674,7 +813,7 @@
                 <div style="margin-top: 30px;">
                     <h3>Contact Information</h3>
                     <p><i class="fas fa-phone"></i> (555) 123-PRINT</p>
-                    <p><i class="fas fa-envelope"></i> info@proprint.example.com</p>
+                    <p><i class="fas fa-envelope"></i> info@printpro.example.com</p>
                     <p><i class="fas fa-clock"></i> Monday-Friday: 9am-6pm</p>
                     <p><i class="fas fa-clock"></i> Saturday: 10am-4pm</p>
                 </div>
@@ -686,7 +825,7 @@
     <footer>
         <div class="container footer-container">
             <div class="footer-section">
-                <h3>ProPrint</h3>
+                <h3>PrintPro</h3>
                 <p>Professional wide format printing services for businesses of all sizes.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook"></i></a>
@@ -716,12 +855,12 @@
                 <h3>Contact Info</h3>
                 <p>123 Print Street, Graphic City, GC 12345</p>
                 <p>Phone: (555) 123-PRINT</p>
-                <p>Email: info@proprint.example.com</p>
+                <p>Email: info@printpro.example.com</p>
             </div>
         </div>
         
         <div class="copyright container">
-            <p>&copy; 2023 ProPrint Wide Format Printing. All rights reserved.</p>
+            <p>&copy; 2023 PrintPro Wide Format Printing. All rights reserved.</p>
             <p>
                 <a href="#">Privacy Policy</a> | 
                 <a href="#">Terms of Service</a>
@@ -731,6 +870,7 @@
 
     <!-- Notification -->
     <div class="notification" id="notification">
+        <i id="notification-icon"></i>
         <p id="notification-message"></p>
     </div>
 
@@ -744,38 +884,115 @@
                 mainNav.classList.toggle('active');
             });
             
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    mainNav.classList.remove('active');
+                });
+            });
+            
             // File upload functionality
             const uploadBtn = document.getElementById('upload-btn');
             const fileInput = document.getElementById('file-input');
             const fileList = document.getElementById('file-list');
+            const uploadArea = document.getElementById('upload-area');
             
             uploadBtn.addEventListener('click', function() {
                 fileInput.click();
             });
             
-            fileInput.addEventListener('change', function() {
+            // Drag and drop functionality
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', function() {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                
+                if (e.dataTransfer.files.length > 0) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileUpload();
+                }
+            });
+            
+            fileInput.addEventListener('change', handleFileUpload);
+            
+            function handleFileUpload() {
                 fileList.innerHTML = '';
                 
                 if (fileInput.files.length > 0) {
                     for (let i = 0; i < fileInput.files.length; i++) {
                         const file = fileInput.files[i];
+                        
+                        // Validate file type
+                        const validTypes = ['image/jpeg', 'image/png', 'application/pdf', 'image/vnd.adobe.photoshop', 'application/postscript'];
+                        if (!validTypes.includes(file.type)) {
+                            showNotification('Invalid file type: ' + file.name, 'error');
+                            continue;
+                        }
+                        
+                        // Validate file size (25MB max)
+                        if (file.size > 25 * 1024 * 1024) {
+                            showNotification('File too large: ' + file.name, 'error');
+                            continue;
+                        }
+                        
                         const fileItem = document.createElement('div');
                         fileItem.className = 'file-item';
                         fileItem.innerHTML = `
                             <span>${file.name}</span>
                             <span>${formatFileSize(file.size)}</span>
+                            <button class="remove-file" data-index="${i}"><i class="fas fa-times"></i></button>
                         `;
                         fileList.appendChild(fileItem);
                     }
+                    
+                    // Add event listeners to remove buttons
+                    document.querySelectorAll('.remove-file').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const index = parseInt(this.getAttribute('data-index'));
+                            removeFile(index);
+                        });
+                    });
                     
                     showNotification('Your files have been successfully uploaded!', 'success');
                     
                     // Simulate email notification to business owner
                     setTimeout(() => {
-                        showNotification('Business owner notified of new file upload', 'success');
+                        showNotification('Business owner notified of new file upload', 'info');
                     }, 1500);
                 }
-            });
+            }
+            
+            function removeFile(index) {
+                // Create a new FileList without the removed file
+                const dt = new DataTransfer();
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    if (i !== index) {
+                        dt.items.add(fileInput.files[i]);
+                    }
+                }
+                fileInput.files = dt.files;
+                
+                // Refresh the file list
+                handleFileUpload();
+            }
             
             // Material selection
             const materialCards = document.querySelectorAll('.material-card');
@@ -794,24 +1011,28 @@
             // Dimension inputs
             const widthInput = document.getElementById('width');
             const heightInput = document.getElementById('height');
+            const quantityInput = document.getElementById('quantity');
             
             widthInput.addEventListener('input', calculateQuote);
             heightInput.addEventListener('input', calculateQuote);
+            quantityInput.addEventListener('input', calculateQuote);
             
             // Calculate quote
             function calculateQuote() {
                 const quoteSummary = document.getElementById('quote-summary');
                 
-                if (selectedMaterial && widthInput.value && heightInput.value) {
+                if (selectedMaterial && widthInput.value && heightInput.value && quantityInput.value) {
                     const materialName = selectedMaterial.querySelector('h3').textContent;
                     const pricePerSqFt = parseFloat(selectedMaterial.dataset.price);
                     const width = parseFloat(widthInput.value);
                     const height = parseFloat(heightInput.value);
+                    const quantity = parseInt(quantityInput.value);
                     const area = width * height;
-                    const total = area * pricePerSqFt;
+                    const total = area * pricePerSqFt * quantity;
                     
                     document.getElementById('quote-material').textContent = materialName;
                     document.getElementById('quote-dimensions').textContent = `${width} ft × ${height} ft`;
+                    document.getElementById('quote-quantity').textContent = quantity;
                     document.getElementById('quote-price').textContent = `$${pricePerSqFt.toFixed(2)}`;
                     document.getElementById('quote-area').textContent = `${area.toFixed(2)} sq ft`;
                     document.getElementById('quote-total').textContent = `$${total.toFixed(2)}`;
@@ -820,7 +1041,7 @@
                     
                     // Simulate email notification with quote
                     setTimeout(() => {
-                        showNotification('Price quote has been sent to your email', 'success');
+                        showNotification('Price quote has been sent to your email', 'info');
                     }, 1000);
                 }
             }
@@ -831,13 +1052,32 @@
             const orderSection = document.getElementById('order');
             
             proceedToPaymentBtn.addEventListener('click', function() {
+                if (!selectedMaterial) {
+                    showNotification('Please select a material first', 'error');
+                    return;
+                }
+                
+                if (!widthInput.value || !heightInput.value) {
+                    showNotification('Please enter dimensions first', 'error');
+                    return;
+                }
+                
+                if (fileInput.files.length === 0) {
+                    showNotification('Please upload your artwork first', 'error');
+                    return;
+                }
+                
                 orderSection.style.display = 'none';
                 paymentSection.style.display = 'block';
-                window.scrollTo(0, 0);
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
             
             // Submit payment
             const submitPaymentBtn = document.getElementById('submit-payment');
+            const paymentProgress = document.getElementById('payment-progress');
             
             submitPaymentBtn.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -845,24 +1085,48 @@
                 // Simple validation
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
                 const cardNumber = document.getElementById('card-number').value;
+                const expiry = document.getElementById('expiry').value;
+                const cvv = document.getElementById('cvv').value;
                 
-                if (!name || !email || !cardNumber) {
+                if (!name || !email || !phone || !cardNumber || !expiry || !cvv) {
                     showNotification('Please fill in all required fields', 'error');
                     return;
                 }
                 
                 // Simulate payment processing
-                showNotification('Processing your payment...', 'success');
+                submitPaymentBtn.disabled = true;
+                let progress = 0;
                 
-                setTimeout(() => {
-                    showNotification('Your payment was successful. Thank you for your order!', 'success');
+                const progressInterval = setInterval(() => {
+                    progress += 5;
+                    paymentProgress.style.width = `${progress}%`;
                     
-                    // Simulate order confirmation email
-                    setTimeout(() => {
-                        showNotification('Order confirmation has been sent to your email', 'success');
-                    }, 1500);
-                }, 2000);
+                    if (progress >= 100) {
+                        clearInterval(progressInterval);
+                        
+                        showNotification('Your payment was successful. Thank you for your order!', 'success');
+                        
+                        // Simulate order confirmation email
+                        setTimeout(() => {
+                            showNotification('Order confirmation has been sent to your email', 'info');
+                            
+                            // Reset form
+                            setTimeout(() => {
+                                document.getElementById('payment-form').reset();
+                                paymentProgress.style.width = '0%';
+                                submitPaymentBtn.disabled = false;
+                                
+                                // Scroll back to top
+                                window.scrollTo({
+                                    top: 0,
+                                    behavior: 'smooth'
+                                });
+                            }, 2000);
+                        }, 1500);
+                    }
+                }, 100);
             });
             
             // Contact form
@@ -870,6 +1134,15 @@
             
             contactForm.addEventListener('submit', function(e) {
                 e.preventDefault();
+                
+                const name = document.getElementById('contact-name').value;
+                const email = document.getElementById('contact-email').value;
+                const message = document.getElementById('contact-message').value;
+                
+                if (!name || !email || !message) {
+                    showNotification('Please fill in all required fields', 'error');
+                    return;
+                }
                 
                 showNotification('Your message has been sent successfully!', 'success');
                 contactForm.reset();
@@ -885,16 +1158,34 @@
             // Notification function
             function showNotification(message, type) {
                 const notification = document.getElementById('notification');
+                const notificationIcon = document.getElementById('notification-icon');
                 const notificationMessage = document.getElementById('notification-message');
                 
                 notificationMessage.textContent = message;
                 notification.className = `notification ${type}`;
+                
+                // Set icon based on notification type
+                switch(type) {
+                    case 'success':
+                        notificationIcon.className = 'fas fa-check-circle';
+                        break;
+                    case 'error':
+                        notificationIcon.className = 'fas fa-exclamation-circle';
+                        break;
+                    case 'info':
+                        notificationIcon.className = 'fas fa-info-circle';
+                        break;
+                }
+                
                 notification.classList.add('show');
                 
                 setTimeout(() => {
                     notification.classList.remove('show');
                 }, 3000);
             }
+            
+            // Initialize the page
+            calculateQuote(); // This will hide the quote summary initially
         });
     </script>
 </body>
